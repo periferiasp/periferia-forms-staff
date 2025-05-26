@@ -11,15 +11,15 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      color: white;
     }
 
     .container {
       max-width: 700px;
-      margin: 50px auto;
+      margin: 60px auto;
       background-color: #111;
       padding: 40px;
       border-radius: 10px;
+      color: #fff;
     }
 
     .logo {
@@ -33,21 +33,13 @@
       margin: 0 auto;
     }
 
-    h1 {
+    h1, h2 {
       text-align: center;
-      font-size: 32px;
       color: white;
     }
 
     h1 span {
       color: red;
-    }
-
-    h2 {
-      text-align: center;
-      font-size: 20px;
-      font-weight: normal;
-      color: white;
     }
 
     label {
@@ -58,11 +50,9 @@
 
     input[type="text"],
     input[type="date"],
-    textarea,
-    select {
+    textarea {
       width: 100%;
-      padding: 12px;
-      margin-top: 6px;
+      padding: 10px;
       background-color: #000;
       color: white;
       border: 1px solid #555;
@@ -70,19 +60,22 @@
       box-sizing: border-box;
     }
 
-    small {
+    textarea {
+      resize: vertical;
+      height: 80px;
+    }
+
+    .checkbox-group {
+      margin-top: 10px;
+    }
+
+    .checkbox-group label {
+      font-weight: normal;
       display: block;
-      margin-top: 5px;
-      color: #aaa;
+      margin-left: 20px;
     }
 
-    .checkbox {
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-    }
-
-    .checkbox input {
+    .checkbox-group input[type="checkbox"] {
       margin-right: 10px;
     }
 
@@ -100,221 +93,168 @@
 
     .success {
       text-align: center;
+      display: none;
     }
 
-    .success h1 {
-      font-size: 32px;
-    }
-
-    .success p {
-      font-size: 18px;
-      margin-top: 20px;
+    small {
+      color: #aaa;
     }
   </style>
 </head>
 <body>
-
-<div class="container" id="form1">
+<div class="container" id="formulario">
   <div class="logo">
     <img src="logo-periferia.png" alt="Logo Periferia">
   </div>
-
   <h1>Formulário <span>Staff</span></h1>
-  <h2>Preencha o formulário abaixo para se candidatar à equipe staff</h2>
+  <h2>Preencha com atenção</h2>
 
   <form id="staffForm">
-    <label for="nome">Nome Completo *</label>
-    <input type="text" id="nome" name="nome" required>
+    <label>Nome Completo *</label>
+    <input type="text" name="nome" required>
 
-    <label for="nascimento">Data de Nascimento *</label>
-    <input type="date" id="nascimento" name="nascimento" required>
+    <label>Data de Nascimento *</label>
+    <input type="date" name="nascimento" id="nascimento" required>
 
-    <label for="idade">Idade *</label>
-    <input type="text" id="idade" name="idade" readonly>
-    <small>A idade é calculada automaticamente com base na data de nascimento</small>
+    <label>Idade *</label>
+    <input type="text" name="idade" id="idade" readonly>
+    <small>Calculada automaticamente</small>
 
-    <div class="checkbox">
-      <input type="checkbox" id="temId" name="temId">
-      <label for="temId">Tenho ID liberado na cidade</label>
-    </div>
+    <label>Seu Discord *</label>
+    <input type="text" name="discord" required>
 
-    <label for="discord">Seu Discord *</label>
-    <input type="text" id="discord" name="discord" required>
-
-    <button type="button" onclick="mostrarPerguntas()">Próximo</button>
-  </form>
-</div>
-
-<div class="container" id="form2" style="display: none;">
-  <div class="logo">
-    <img src="logo-periferia.png" alt="Logo Periferia">
-  </div>
-
-  <h1>Formulário <span>Staff</span></h1>
-  <h2>Perguntas complementares</h2>
-
-  <form id="perguntasForm">
-    <label>1. Por que você deseja fazer parte da equipe staff da Vice?</label>
-    <textarea name="q1" required></textarea>
+    <label>1. Por que você deseja fazer parte da equipe staff da periferia?</label>
+    <textarea name="q1"></textarea>
 
     <label>2. Qual sua experiência prévia como staff em outros servidores?</label>
-    <textarea name="q2" required></textarea>
+    <textarea name="q2"></textarea>
 
     <label>3. Quantas horas por dia você pode dedicar ao servidor?</label>
-    <select name="q3" required>
-      <option value="">Selecione</option>
-      <option>Menos de 2 horas</option>
-      <option>2-4 horas</option>
-      <option>4-6 horas</option>
-      <option>Mais de 6 horas</option>
-    </select>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="q3" value="Menos de 2 horas">Menos de 2 horas</label>
+      <label><input type="checkbox" name="q3" value="2-4 horas">2-4 horas</label>
+      <label><input type="checkbox" name="q3" value="4-6 horas">4-6 horas</label>
+      <label><input type="checkbox" name="q3" value="Mais de 6 horas">Mais de 6 horas</label>
+    </div>
 
     <label>4. Você já teve experiência com comandos de administração no FiveM?</label>
-    <select name="q4" required>
-      <option value="">Selecione</option>
-      <option>Sim, tenho bastante experiência</option>
-      <option>Sim, tenho alguma experiência</option>
-      <option>Não, mas aprendo rápido</option>
-      <option>Não tenho experiência</option>
-    </select>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="q4" value="Bastante experiência">Bastante experiência</label>
+      <label><input type="checkbox" name="q4" value="Alguma experiência">Alguma experiência</label>
+      <label><input type="checkbox" name="q4" value="Aprendo rápido">Aprendo rápido</label>
+      <label><input type="checkbox" name="q4" value="Nenhuma experiência">Nenhuma experiência</label>
+    </div>
 
     <label>5. Como você lidaria com uma situação de conflito entre jogadores?</label>
-    <textarea name="q5" required></textarea>
+    <textarea name="q5"></textarea>
 
-    <label>6. Você já foi staff em algum lugar? Se sim, qual foi sua experiência e por que saiu?</label>
-    <textarea name="q6" required></textarea>
+    <label>6. Você já foi staff em algum lugar? Se sim qual foi sua experiência e porque saiu?</label>
+    <textarea name="q6"></textarea>
 
     <label>7. Você entende e concorda com todas as regras do servidor?</label>
-    <select name="q7" required>
-      <option value="">Selecione</option>
-      <option>Sim, entendo e concordo com todas</option>
-      <option>Sim, mas tenho dúvidas em algumas</option>
-      <option>Não conheço todas ainda</option>
-      <option>Não concordo com algumas</option>
-    </select>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="q7" value="Entendo e concordo">Entendo e concordo</label>
+      <label><input type="checkbox" name="q7" value="Tenho dúvidas">Tenho dúvidas</label>
+      <label><input type="checkbox" name="q7" value="Não conheço todas">Não conheço todas</label>
+      <label><input type="checkbox" name="q7" value="Não concordo">Não concordo</label>
+    </div>
 
     <label>8. Você lida bem com hierarquia? Explique:</label>
-    <textarea name="q8" required></textarea>
+    <textarea name="q8"></textarea>
 
-    <label>9. Consegue diferenciar amizade/rp de staff caso tenha que aplicar alguma punição?</label>
-    <textarea name="q9" required></textarea>
+    <label>9. Consegue diferenciar amizade/rp de staff?</label>
+    <textarea name="q9"></textarea>
 
-    <label>10. Explique com suas palavras o que é RDM:</label>
-    <textarea name="q10" required></textarea>
+    <label>10. Explique com suas palavras o que é rdm:</label>
+    <textarea name="q10"></textarea>
 
     <label>11. Explique com suas palavras o que é metagaming:</label>
-    <textarea name="q11" required></textarea>
+    <textarea name="q11"></textarea>
 
-    <label>12. Você vê outro staff quebrando alguma regra, o que você faria?</label>
-    <textarea name="q12" required></textarea>
+    <label>12. Você vê outro staff quebrando regra. O que faria?</label>
+    <textarea name="q12"></textarea>
 
     <label>13. Tem ciência que suas ações poderão resultar em banimentos ou exoneração?</label>
-    <select name="q13" required>
-      <option value="">Selecione</option>
-      <option>Sim, estou ciente</option>
-      <option>Não, gostaria de mais informações</option>
-      <option>Tenho dúvidas sobre isso</option>
-    </select>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="q13" value="Estou ciente">Estou ciente</label>
+      <label><input type="checkbox" name="q13" value="Quero mais informações">Quero mais informações</label>
+      <label><input type="checkbox" name="q13" value="Tenho dúvidas">Tenho dúvidas</label>
+    </div>
 
-    <label>14. Caso você seja punido ou exonerado da staff, como lidaria com isso?</label>
-    <select name="q14" required>
-      <option value="">Selecione</option>
-      <option>Aceitaria e respeitaria a decisão</option>
-      <option>Questionaria a decisão de forma respeitosa</option>
-      <option>Ficaria decepcionado, mas entenderia</option>
-      <option>Não aceitaria bem</option>
-    </select>
+    <label>14. Caso seja exonerado, como lidaria com isso?</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="q14" value="Aceitaria e respeitaria">Aceitaria e respeitaria</label>
+      <label><input type="checkbox" name="q14" value="Questionaria com respeito">Questionaria com respeito</label>
+      <label><input type="checkbox" name="q14" value="Ficaria decepcionado, mas entenderia">Ficaria decepcionado, mas entenderia</label>
+      <label><input type="checkbox" name="q14" value="Não aceitaria bem">Não aceitaria bem</label>
+    </div>
 
     <label>15. Como você acha que deve ser a postura de um staff?</label>
-    <textarea name="q15" required></textarea>
+    <textarea name="q15"></textarea>
 
     <button type="submit">Enviar</button>
   </form>
 </div>
 
-<div class="container success" id="sucesso" style="display: none;">
+<div class="container success" id="sucesso">
   <div class="logo">
     <img src="logo-periferia.png" alt="Logo Periferia">
   </div>
   <h1>Formulário <span>Staff</span></h1>
-  <p class="success-msg">A equipe entrará em contato pelo seu Discord para marcar uma entrevista. Desde já, obrigado pela inscrição.</p>
+  <h2>Formulário enviado!</h2>
+  <p>A equipe entrará em contato pelo seu Discord.</p>
 </div>
 
 <script>
-  const nascimento = document.getElementById('nascimento');
+  const form = document.getElementById('staffForm');
   const idade = document.getElementById('idade');
+  const nascimento = document.getElementById('nascimento');
 
   nascimento.addEventListener('change', () => {
-    const birthDate = new Date(nascimento.value);
+    const birth = new Date(nascimento.value);
     const today = new Date();
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+    let years = today.getFullYear() - birth.getFullYear();
+    if (today.getMonth() < birth.getMonth() || (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())) {
+      years--;
     }
-    idade.value = age;
+    idade.value = years;
   });
 
-  function mostrarPerguntas() {
-    const form1 = document.getElementById("staffForm");
-    if (!form1.checkValidity()) {
-      form1.reportValidity();
-      return;
-    }
-    document.getElementById("form1").style.display = "none";
-    document.getElementById("form2").style.display = "block";
-  }
-
-  document.getElementById("perguntasForm").addEventListener("submit", async function (e) {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    const data = new FormData(form);
+    const fields = [];
 
-    const f1 = document.getElementById("staffForm");
-    const f2 = this;
+    for (const [name, value] of data.entries()) {
+      if (fields.some(f => f.name === name)) {
+        fields.find(f => f.name === name).value += `, ${value}`;
+      } else {
+        fields.push({ name, value });
+      }
+    }
 
-    const data = {
-      content: "**Nova inscrição de staff**",
-      embeds: [
-        {
-          title: "Informações do Candidato",
-          color: 16711680,
-          fields: [
-            { name: "Nome", value: f1.nome.value },
-            { name: "Data de Nascimento", value: f1.nascimento.value },
-            { name: "Idade", value: f1.idade.value },
-            { name: "ID Liberado na Cidade", value: f1.temId.checked ? "Sim" : "Não" },
-            { name: "Discord", value: f1.discord.value },
-            { name: "1", value: f2.q1.value },
-            { name: "2", value: f2.q2.value },
-            { name: "3", value: f2.q3.value },
-            { name: "4", value: f2.q4.value },
-            { name: "5", value: f2.q5.value },
-            { name: "6", value: f2.q6.value },
-            { name: "7", value: f2.q7.value },
-            { name: "8", value: f2.q8.value },
-            { name: "9", value: f2.q9.value },
-            { name: "10", value: f2.q10.value },
-            { name: "11", value: f2.q11.value },
-            { name: "12", value: f2.q12.value },
-            { name: "13", value: f2.q13.value },
-            { name: "14", value: f2.q14.value },
-            { name: "15", value: f2.q15.value }
-          ],
-          footer: { text: "Periferia RP" },
-          timestamp: new Date().toISOString()
-        }
-      ]
-    };
+    const embedFields = fields.map(f => ({ name: f.name, value: f.value || "Nenhuma resposta", inline: false }));
 
     await fetch("https://discord.com/api/webhooks/1376335951575519232/9ExgaEghMPV54RLwNn-IGh65Q3D-c7Cde9AhH4nxXmdDypcXdoB2a-spwSPPGu7neqdF", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        content: "**Nova inscrição de staff**",
+        embeds: [
+          {
+            title: "Formulário Staff",
+            color: 16711680,
+            fields: embedFields,
+            footer: { text: "Periferia RP" },
+            timestamp: new Date().toISOString()
+          }
+        ]
+      })
     });
 
-    document.getElementById("form2").style.display = "none";
-    document.getElementById("sucesso").style.display = "block";
+    document.getElementById('formulario').style.display = 'none';
+    document.getElementById('sucesso').style.display = 'block';
   });
 </script>
-
 </body>
 </html>

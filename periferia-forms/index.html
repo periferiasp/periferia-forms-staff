@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulário Staff</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #000000, #1a0a0a);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 60px auto;
+      background-color: #111;
+      padding: 40px;
+      border-radius: 10px;
+      color: #fff;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 150px; /* ALTERADO: reduz tamanho da imagem */
+      display: block;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 32px;
+      color: white;
+    }
+
+    h1 span {
+      color: red;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 20px;
+      font-weight: normal;
+      color: white;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      color: white;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      background-color: #000;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    small {
+      display: block;
+      margin-top: 5px;
+      color: #aaa;
+    }
+
+    .checkbox {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    .checkbox input {
+      margin-right: 10px;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      padding: 12px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .success {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .success h1 {
+      font-size: 32px;
+    }
+
+    .success p {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="formulario">
+  <div class="logo">
+    <img src="logo-periferia.png" alt="Logo Periferia">
+  </div>
+
+  <h1>Formulário <span>Staff</span></h1>
+  <h2>Preencha o formulário abaixo para se candidatar à equipe staff</h2>
+
+  <form id="staffForm">
+    <label for="nome">Nome Completo *</label>
+    <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+
+    <label for="nascimento">Data de Nascimento *</label>
+    <input type="date" id="nascimento" name="nascimento" required>
+
+    <label for="idade">Idade *</label>
+    <input type="text" id="idade" name="idade" readonly>
+    <small>A idade é calculada automaticamente com base na data de nascimento</small>
+
+    <div class="checkbox">
+      <input type="checkbox" id="temId" name="temId">
+      <label for="temId">Tenho ID liberado na cidade</label>
+    </div>
+
+    <label for="discord">Seu Discord *</label>
+    <input type="text" id="discord" name="discord" placeholder="Ex: usuario#0000" required>
+
+    <button type="submit">Enviar</button>
+  </form>
+</div>
+
+<div class="container success" id="sucesso" style="display: none;">
+  <div class="logo">
+    <img src="logo-periferia.png" alt="Logo Periferia">
+  </div>
+
+  <h1>Formulário <span>Staff</span></h1>
+  <h2>Formulário enviado.</h2>
+  <p>A equipe entrará em contato pelo seu Discord para marcar uma entrevista. Desde já, obrigado pela inscrição.</p>
+</div>
+
+<script>
+  const form = document.getElementById('staffForm');
+  const nascimento = document.getElementById('nascimento');
+  const idade = document.getElementById('idade');
+
+  nascimento.addEventListener('change', () => {
+    const birthDate = new Date(nascimento.value);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    idade.value = age;
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = {
+      content: "**Nova inscrição de staff**",
+      embeds: [
+        {
+          title: "Informações do Candidato",
+          color: 16711680,
+          fields: [
+            { name: "Nome", value: form.nome.value, inline: false },
+            { name: "Data de Nascimento", value: form.nascimento.value, inline: true },
+            { name: "Idade", value: form.idade.value, inline: true },
+            { name: "ID Liberado na Cidade", value: form.temId.checked ? "Sim" : "Não", inline: true },
+            { name: "Seu Discord", value: form.discord.value, inline: false }
+          ],
+          footer: { text: "Periferia RP" },
+          timestamp: new Date().toISOString()
+        }
+      ]
+    };
+
+    await fetch("https://discord.com/api/webhooks/1376335951575519232/9ExgaEghMPV54RLwNn-IGh65Q3D-c7Cde9AhH4nxXmdDypcXdoB2a-spwSPPGu7neqdF", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    document.getElementById('formulario').style.display = "none";
+    document.getElementById('sucesso').style.display = "block";
+  });
+</script>
+
+</body>
+</html>

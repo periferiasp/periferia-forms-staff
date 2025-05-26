@@ -5,8 +5,7 @@
   <title>Formulário Staff</title>
   <style>
     body {
-      background: linear-gradient(to bottom, #000000, #1a0a0a);
-      background-repeat: no-repeat;
+      background: linear-gradient(to bottom, #000000, #1a0000);
       background-attachment: fixed;
       font-family: Arial, sans-serif;
       margin: 0;
@@ -14,7 +13,7 @@
     }
 
     .container {
-      max-width: 700px;
+      max-width: 600px;
       margin: 60px auto;
       background-color: #111;
       padding: 40px;
@@ -33,8 +32,9 @@
       margin: 0 auto;
     }
 
-    h1, h2 {
+    h1 {
       text-align: center;
+      font-size: 32px;
       color: white;
     }
 
@@ -42,9 +42,17 @@
       color: red;
     }
 
+    h2 {
+      text-align: center;
+      font-size: 20px;
+      font-weight: normal;
+      color: white;
+    }
+
     label {
       display: block;
       margin-top: 20px;
+      color: white;
       font-weight: bold;
     }
 
@@ -52,7 +60,8 @@
     input[type="date"],
     textarea {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
+      margin-top: 6px;
       background-color: #000;
       color: white;
       border: 1px solid #555;
@@ -62,21 +71,23 @@
 
     textarea {
       resize: vertical;
-      height: 80px;
     }
 
-    .checkbox-group {
-      margin-top: 10px;
+    .checkbox,
+    .multi {
+      margin-top: 15px;
     }
 
-    .checkbox-group label {
-      font-weight: normal;
-      display: block;
-      margin-left: 20px;
+    .checkbox label,
+    .multi label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
     }
 
-    .checkbox-group input[type="checkbox"] {
-      margin-right: 10px;
+    .checkbox input,
+    .multi input {
+      margin-right: 8px;
     }
 
     button {
@@ -93,167 +104,207 @@
 
     .success {
       text-align: center;
-      display: none;
+      margin-top: 100px;
     }
 
-    small {
-      color: #aaa;
+    .success h1 {
+      font-size: 32px;
+    }
+
+    .success p {
+      font-size: 18px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-<div class="container" id="formulario">
+
+<!-- Tela 1 -->
+<div class="container" id="formulario1">
+  <div class="logo">
+    <img src="logo-periferia.png" alt="Logo Periferia">
+  </div>
+
+  <h1>Formulário <span>Staff</span></h1>
+  <h2>Preencha o formulário abaixo para se candidatar à equipe staff</h2>
+
+  <form id="staffForm">
+    <label for="nome">Nome Completo *</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <label for="nascimento">Data de Nascimento *</label>
+    <input type="date" id="nascimento" name="nascimento" required>
+
+    <label for="idade">Idade *</label>
+    <input type="text" id="idade" name="idade" readonly>
+
+    <div class="checkbox">
+      <label><input type="checkbox" id="temId" name="temId"> Tenho ID liberado na cidade</label>
+    </div>
+
+    <label for="discord">Seu Discord *</label>
+    <input type="text" id="discord" name="discord" required>
+
+    <button type="button" onclick="mostrarPerguntas()">Avançar</button>
+  </form>
+</div>
+
+<!-- Tela 2 -->
+<div class="container" id="formulario2" style="display: none;">
   <div class="logo">
     <img src="logo-periferia.png" alt="Logo Periferia">
   </div>
   <h1>Formulário <span>Staff</span></h1>
-  <h2>Preencha com atenção</h2>
+  <h2>Perguntas para candidatura</h2>
 
-  <form id="staffForm">
-    <label>Nome Completo *</label>
-    <input type="text" name="nome" required>
-
-    <label>Data de Nascimento *</label>
-    <input type="date" name="nascimento" id="nascimento" required>
-
-    <label>Idade *</label>
-    <input type="text" name="idade" id="idade" readonly>
-    <small>Calculada automaticamente</small>
-
-    <label>Seu Discord *</label>
-    <input type="text" name="discord" required>
-
-    <label>1. Por que você deseja fazer parte da equipe staff da periferia?</label>
-    <textarea name="q1"></textarea>
+  <form id="perguntasForm">
+    <label>1. Por que você deseja fazer parte da equipe staff da Periferia?</label>
+    <textarea name="pergunta1" required></textarea>
 
     <label>2. Qual sua experiência prévia como staff em outros servidores?</label>
-    <textarea name="q2"></textarea>
+    <textarea name="pergunta2" required></textarea>
 
     <label>3. Quantas horas por dia você pode dedicar ao servidor?</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="q3" value="Menos de 2 horas">Menos de 2 horas</label>
-      <label><input type="checkbox" name="q3" value="2-4 horas">2-4 horas</label>
-      <label><input type="checkbox" name="q3" value="4-6 horas">4-6 horas</label>
-      <label><input type="checkbox" name="q3" value="Mais de 6 horas">Mais de 6 horas</label>
+    <div class="multi">
+      <label><input type="checkbox" name="pergunta3" value="Menos de 2 horas"> Menos de 2 horas</label>
+      <label><input type="checkbox" name="pergunta3" value="2-4 horas"> 2-4 horas</label>
+      <label><input type="checkbox" name="pergunta3" value="4-6 horas"> 4-6 horas</label>
+      <label><input type="checkbox" name="pergunta3" value="Mais de 6 horas"> Mais de 6 horas</label>
     </div>
 
     <label>4. Você já teve experiência com comandos de administração no FiveM?</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="q4" value="Bastante experiência">Bastante experiência</label>
-      <label><input type="checkbox" name="q4" value="Alguma experiência">Alguma experiência</label>
-      <label><input type="checkbox" name="q4" value="Aprendo rápido">Aprendo rápido</label>
-      <label><input type="checkbox" name="q4" value="Nenhuma experiência">Nenhuma experiência</label>
+    <div class="multi">
+      <label><input type="checkbox" name="pergunta4" value="Bastante experiência"> Sim, tenho bastante experiência</label>
+      <label><input type="checkbox" name="pergunta4" value="Alguma experiência"> Sim, tenho alguma experiência</label>
+      <label><input type="checkbox" name="pergunta4" value="Aprendo rápido"> Não, mas aprendo rápido</label>
+      <label><input type="checkbox" name="pergunta4" value="Sem experiência"> Não tenho experiência</label>
     </div>
 
     <label>5. Como você lidaria com uma situação de conflito entre jogadores?</label>
-    <textarea name="q5"></textarea>
+    <textarea name="pergunta5" required></textarea>
 
-    <label>6. Você já foi staff em algum lugar? Se sim qual foi sua experiência e porque saiu?</label>
-    <textarea name="q6"></textarea>
+    <label>6. Você já foi staff em algum lugar? Se sim, qual foi sua experiência e por que saiu?</label>
+    <textarea name="pergunta6" required></textarea>
 
     <label>7. Você entende e concorda com todas as regras do servidor?</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="q7" value="Entendo e concordo">Entendo e concordo</label>
-      <label><input type="checkbox" name="q7" value="Tenho dúvidas">Tenho dúvidas</label>
-      <label><input type="checkbox" name="q7" value="Não conheço todas">Não conheço todas</label>
-      <label><input type="checkbox" name="q7" value="Não concordo">Não concordo</label>
+    <div class="multi">
+      <label><input type="checkbox" name="pergunta7" value="Concordo com todas"> Sim, entendo e concordo com todas</label>
+      <label><input type="checkbox" name="pergunta7" value="Tenho dúvidas"> Sim, mas tenho dúvidas em algumas</label>
+      <label><input type="checkbox" name="pergunta7" value="Não conheço"> Não conheço todas ainda</label>
+      <label><input type="checkbox" name="pergunta7" value="Não concordo"> Não concordo com algumas</label>
     </div>
 
     <label>8. Você lida bem com hierarquia? Explique:</label>
-    <textarea name="q8"></textarea>
+    <textarea name="pergunta8" required></textarea>
 
-    <label>9. Consegue diferenciar amizade/rp de staff?</label>
-    <textarea name="q9"></textarea>
+    <label>9. Consegue diferenciar amizade/rp de staff caso tenha que aplicar punição?</label>
+    <textarea name="pergunta9" required></textarea>
 
-    <label>10. Explique com suas palavras o que é rdm:</label>
-    <textarea name="q10"></textarea>
+    <label>10. Explique com suas palavras o que é RDM:</label>
+    <textarea name="pergunta10" required></textarea>
 
     <label>11. Explique com suas palavras o que é metagaming:</label>
-    <textarea name="q11"></textarea>
+    <textarea name="pergunta11" required></textarea>
 
-    <label>12. Você vê outro staff quebrando regra. O que faria?</label>
-    <textarea name="q12"></textarea>
+    <label>12. Você vê outro staff quebrando alguma regra, o que faria?</label>
+    <textarea name="pergunta12" required></textarea>
 
-    <label>13. Tem ciência que suas ações poderão resultar em banimentos ou exoneração?</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="q13" value="Estou ciente">Estou ciente</label>
-      <label><input type="checkbox" name="q13" value="Quero mais informações">Quero mais informações</label>
-      <label><input type="checkbox" name="q13" value="Tenho dúvidas">Tenho dúvidas</label>
+    <label>13. Tem ciência que suas ações podem resultar em banimento/exoneração?</label>
+    <div class="multi">
+      <label><input type="checkbox" name="pergunta13" value="Sim, estou ciente"> Sim, estou ciente</label>
+      <label><input type="checkbox" name="pergunta13" value="Gostaria de mais informações"> Não, gostaria de mais informações</label>
+      <label><input type="checkbox" name="pergunta13" value="Tenho dúvidas"> Tenho dúvidas sobre isso</label>
     </div>
 
-    <label>14. Caso seja exonerado, como lidaria com isso?</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="q14" value="Aceitaria e respeitaria">Aceitaria e respeitaria</label>
-      <label><input type="checkbox" name="q14" value="Questionaria com respeito">Questionaria com respeito</label>
-      <label><input type="checkbox" name="q14" value="Ficaria decepcionado, mas entenderia">Ficaria decepcionado, mas entenderia</label>
-      <label><input type="checkbox" name="q14" value="Não aceitaria bem">Não aceitaria bem</label>
+    <label>14. Caso seja punido ou exonerado, qual seria sua postura?</label>
+    <div class="multi">
+      <label><input type="checkbox" name="pergunta14" value="Aceitaria"> Aceitaria e respeitaria a decisão</label>
+      <label><input type="checkbox" name="pergunta14" value="Questionaria"> Questionaria a decisão de forma respeitosa</label>
+      <label><input type="checkbox" name="pergunta14" value="Decepcionado"> Ficaria decepcionado, mas entenderia</label>
+      <label><input type="checkbox" name="pergunta14" value="Não aceitaria"> Não aceitaria bem</label>
     </div>
 
     <label>15. Como você acha que deve ser a postura de um staff?</label>
-    <textarea name="q15"></textarea>
+    <textarea name="pergunta15" required></textarea>
 
     <button type="submit">Enviar</button>
   </form>
 </div>
 
-<div class="container success" id="sucesso">
+<!-- Tela 3 -->
+<div class="container success" id="sucesso" style="display: none;">
   <div class="logo">
     <img src="logo-periferia.png" alt="Logo Periferia">
   </div>
   <h1>Formulário <span>Staff</span></h1>
-  <h2>Formulário enviado!</h2>
-  <p>A equipe entrará em contato pelo seu Discord.</p>
+  <h2>Formulário enviado.</h2>
+  <p>A equipe entrará em contato pelo seu Discord para marcar uma entrevista. Desde já, obrigado pela inscrição.</p>
 </div>
 
 <script>
-  const form = document.getElementById('staffForm');
-  const idade = document.getElementById('idade');
   const nascimento = document.getElementById('nascimento');
+  const idade = document.getElementById('idade');
 
   nascimento.addEventListener('change', () => {
-    const birth = new Date(nascimento.value);
+    const birthDate = new Date(nascimento.value);
     const today = new Date();
-    let years = today.getFullYear() - birth.getFullYear();
-    if (today.getMonth() < birth.getMonth() || (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())) {
-      years--;
-    }
-    idade.value = years;
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
+    idade.value = age;
   });
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const data = new FormData(form);
-    const fields = [];
+  function mostrarPerguntas() {
+    document.getElementById('formulario1').style.display = "none";
+    document.getElementById('formulario2').style.display = "block";
+  }
 
-    for (const [name, value] of data.entries()) {
-      if (fields.some(f => f.name === name)) {
-        fields.find(f => f.name === name).value += `, ${value}`;
-      } else {
-        fields.push({ name, value });
-      }
+  document.getElementById('perguntasForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form1 = document.getElementById('staffForm');
+    const form2 = document.getElementById('perguntasForm');
+    const formData = new FormData(form2);
+
+    const perguntasMarcadas = {};
+    for (let [key, value] of formData.entries()) {
+      if (!perguntasMarcadas[key]) perguntasMarcadas[key] = [];
+      perguntasMarcadas[key].push(value);
     }
 
-    const embedFields = fields.map(f => ({ name: f.name, value: f.value || "Nenhuma resposta", inline: false }));
+    const data = {
+      content: "**Nova candidatura à staff**",
+      embeds: [
+        {
+          title: "Informações Básicas",
+          color: 16711680,
+          fields: [
+            { name: "Nome", value: form1.nome.value },
+            { name: "Nascimento", value: form1.nascimento.value },
+            { name: "Idade", value: form1.idade.value },
+            { name: "ID Liberado", value: form1.temId.checked ? "Sim" : "Não" },
+            { name: "Discord", value: form1.discord.value }
+          ]
+        },
+        {
+          title: "Respostas às Perguntas",
+          color: 16711680,
+          fields: Object.keys(perguntasMarcadas).map(k => ({
+            name: k,
+            value: perguntasMarcadas[k].join(", ") || "Não respondido"
+          }))
+        }
+      ]
+    };
 
     await fetch("https://discord.com/api/webhooks/1376335951575519232/9ExgaEghMPV54RLwNn-IGh65Q3D-c7Cde9AhH4nxXmdDypcXdoB2a-spwSPPGu7neqdF", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        content: "**Nova inscrição de staff**",
-        embeds: [
-          {
-            title: "Formulário Staff",
-            color: 16711680,
-            fields: embedFields,
-            footer: { text: "Periferia RP" },
-            timestamp: new Date().toISOString()
-          }
-        ]
-      })
+      body: JSON.stringify(data)
     });
 
-    document.getElementById('formulario').style.display = 'none';
-    document.getElementById('sucesso').style.display = 'block';
+    document.getElementById('formulario2').style.display = "none";
+    document.getElementById('sucesso').style.display = "block";
   });
 </script>
 </body>
